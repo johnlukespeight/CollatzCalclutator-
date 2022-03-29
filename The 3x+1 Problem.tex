@@ -1,0 +1,287 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Template for lab reports used at STIMA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Sets the document class for the document
+% Openany is added to remove the book style of starting every new chapter on an odd page (not needed for reports)
+\documentclass[10pt,english, openany]{book}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Loading packages that alter the style
+\usepackage[]{graphicx}
+\usepackage[]{color}
+\usepackage{alltt}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[fleqn]{amsmath}
+\usepackage{amssymb,amsthm}
+\usepackage[table]{xcolor}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\setlength{\parskip}{\smallskipamount}
+\setlength{\parindent}{0pt}
+\graphicspath{ {./images/} }
+
+\usepackage{listings}
+\usepackage{xcolor}
+       
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour},   commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+\setlength{\arrayrulewidth}{1mm}
+\setlength{\tabcolsep}{10pt}
+\renewcommand{\arraystretch}{1.5}
+
+% Set page margins
+\usepackage[top=50pt,bottom=50pt,left=68pt,right=66pt]{geometry}
+
+% Package used for placeholder text
+\usepackage{lipsum}
+
+% Prevents LaTeX from filling out a page to the bottom
+\raggedbottom
+
+% Adding both languages
+\usepackage[english, italian]{babel}
+
+% All page numbers positioned at the bottom of the page
+\usepackage{fancyhdr}
+\fancyhf{} % clear all header and footers
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt} % remove the header rule
+\pagestyle{fancy}
+
+% Changes the style of chapter headings
+\usepackage{titlesec}
+\titleformat{\chapter}
+   {\normalfont\LARGE\bfseries}{\thechapter.}{1em}{}
+% Change distance between chapter header and text
+\titlespacing{\chapter}{0pt}{50pt}{2\baselineskip}
+
+% Adds table captions above the table per default
+\usepackage{float}
+\floatstyle{plaintop}
+\restylefloat{table}
+
+% Adds space between caption and table
+\usepackage[tableposition=top]{caption}
+
+% Adds hyperlinks to references and ToC
+\usepackage{hyperref}
+\hypersetup{hidelinks,linkcolor = black} % Changes the link color to black and hides the hideous red border that usually is created
+
+% If multiple images are to be added, a folder (path) with all the images can be added here 
+\graphicspath{ {Figures/} }
+
+% Separates the first part of the report/thesis in Roman numerals
+\frontmatter
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Starts the document
+\begin{document}
+
+%%% Selects the language to be used for the first couple of pages
+\selectlanguage{english}
+
+%%%%% Adds the title page
+\begin{titlepage}
+	\clearpage\thispagestyle{empty}
+	\centering
+	\vspace{1cm}
+
+	% Titles
+	% Information about the University
+	{\normalsize MATH 2358-263 \\  \par}
+		\vspace{3cm}
+	{\Huge \textbf{\bf{The $3x + 1$ Problem}}}\\
+	%\vspace{1cm}
+	%{\large \textbf{xxxxx} \par}
+	\vspace{4cm}
+	{\normalsize DYALN MESSERLY \\JORDAN FINNEY \\MASON GREENWELL\\JOHN-LUKE SPEIGHT\par}
+	\vspace{5cm}
+    
+    \centering \includegraphics[scale=1.0]{Figures/COLLATZ WHIRLPOOL.jpg}
+    
+    \vspace{0.5cm}
+		
+	% Set the date
+	{\normalsize 04/13/20 \par}
+	
+	\pagebreak
+
+\end{titlepage}
+
+% Adds a table of contents
+\tableofcontents{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Text body starts here!
+\mainmatter
+
+\chapter{Introduction}\label{chapt:sum}
+
+\textit{This project has you explore the $3x + 1$ Problem, also known under other names.  For this report we were asked to study and explore the puzzling Collatz conjecture. This function is deceivingly simple at first glance. However, on further research it turns out to be a problem that has baffled all who have attempted it so far. The conjecture was first posed by Lothar Collatz in 1937 and has been a popular interest in mathematics ever since. The function’s definition is as follows:  . Computing the function can be somewhat easy on the smaller integers. The great mystery comes from the fact that no matter what positive integer you plug into the function the ending value always equals 1. More specifically the positive integer always ends up in the 1, 2, 4, 1… cycle. However, we say “always” with caution due to the fact that no one has yet been able to prove the seemingly inevitable 1 value. Thus the conjecture that any positive integer you input in the function results in 1 has remained a conjecture. Countless integers have been tested by hand as well as super computers and no counterexample has been exposed. It gets even more complicated when non-negative integers are introduced which will be explored later in the report. For this project we set out to research and test the conjecture ourselves. Which includes working out the sequence forwards, backwards, and as mentioned before, with non-positive integers. This problem is very unique and has many observations to be made about it. Our task was discovering some of those observations ourselves and is included below.}
+\clearpage
+
+\section{Working Forward}
+\textit Working through the 3x+1 problem is a fairly easy task, that is with small numbers.
+At first glance each different number used for X takes on a seemingly random string of
+results before it finally reaches 1. For example, if you take the number 7 the numbers that
+come out are in the following order: 22, 11, 34, 17, 52, 26, 13, 40, 20, 10, 5, 16, 8, 4, 2, 1.
+This being said, if you take a look at other examples of numbers put into this equation then
+you'll begin to see a pattern. Towards the end of a majority of the problems you'll see the
+numbers: 10, 5, 16, 8, 4, 2, 1. Aside from this pattern, there are only slight similarities
+for each number. For every number there exists a peak number, (that is the largest
+number you reach while working through it), and for all numbers (up to 30, at least) the
+peak number is an even number.
+
+\section{Working Backwards}
+\textit{To start working backwards with the said “impossible” 3x+1 problem, since 1 is odd we have to multiply by 2 since we can’t go any farther with 3x+1 because it would change to negative numbers. We want to stick with all positive numbers. We go up from there being 1, 2, 4, 8, 16 then to an odd integer. This is where again we can see that no matter the approach there is a no pattern to the 3x+1 problem. This is why no one can solve this problem, there is a certain randomness that is unlike any other math problem. Through starting at 1 we can sprout into this enormous tree diagram. Proving that any positive integer can be further reduced by the said rules to 1.}
+
+\section{Non positive Integers}
+\textit{This function has piqued many a mathematicians’ interest and thus many different angles have been taken to test the conjecture. When people started experimenting with non-positive integers three more cycles were discovered, so as you can see, this discovery has added to the perplexity of the conjecture. If three more cycles were uncovered using non-positive integers perhaps there is another ending number or cycle other than one on the positive integer side that we just haven’t discovered. The possibilities are endless which is precisely why it has driven some people to spend countless hours calculating this conjecture. After some testing of the negative integers ourselves we were able to discover at least two of the cycles and will be illustrated below. It is interesting to see that in one of the cycles that we discovered the value never ends in -1. I’m referring to the -5, -14, -7, -20, -10, -5 cycle and as you can see it gets stuck in an infinite loop around these integers and will never break out. This is what definitely leads us to question whether or not there is indeed a cycle on the positive side that results in a similar fashion and therefore would disprove the conjecture. Even more interesting to us is the fact that even on the negative side there still is a cycle that ends in 1 although this time it’s negative of course. The -1, -2, -1 cycle definitely works a bit different from the positive cycle but it ultimately ends in 1 which to us is fascinating. At least two out of the four known cycles end in 1 albeit negative or positive.}
+
+\chapter{Visualizations and Code}\label{chapt:doe}
+\lstinputlisting[language=Java, 
+caption=Collatz Methods
+]{CollatzMethods.java}
+
+
+\lstinputlisting[language=Java, 
+caption=Collatz Menu (driver)
+]{Collatz.java}
+\lstlistoflistings
+
+\chapter{Results}\label{chapt:results}
+[\textit{ Report the results of the simulations. Validate your work, i.e. show that the computational model (\ref{chapt:model}) and the simulations you run (the DoE \ref{chapt:doe}) were able to obtain the goal of the project}]
+\section{Working Forwards}
+\subsection{Sequences Evaluated}
+The values of $a_0$ were evaluated and we came up with the following values of sequence length for $n = [1,30]$ listed in the table on the following page:\\
+
+\begin{figure}[h]
+\includegraphics[width=0.5\textwidth, inner]{Figures/coral.jpg}
+\caption{Another complex visualization found on reddit}
+\end{figure}
+
+
+ \vspace{1cm}
+  \setlength{\arrayrulewidth}{1mm}
+{\rowcolors{2}{green!80!yellow!50}{green!70!yellow!40}
+\begin{tabular}{ |p{3cm}|p{3cm}|p{3cm}|  }
+\hline
+\multicolumn{3}{|c|}{Sequence Length for $a_0$ $=$ $\{n \mid n \in \mathbb{Z},\; 1 \leq n \leq 30\}$} \\
+\hline
+$a_0$& Length of Sequence&Highest Value\\
+\hline
+ 1&  3  & 4\\
+ 2&  1  & 2\\
+ 3&  7  & 16\\
+ 4&  2  & 4 \\
+ 5&  5  & 16\\
+ 6&  8  & 16\\
+ 7&  16  & 52\\
+ 8&  3  & 8 \\
+ 9&  19  & 52\\
+ 10& 6  & 16\\
+ 11&  14  & 52\\
+ 12&  9  & 16\\
+ 13&  9  & 40\\
+ 14&  17  & 52\\
+ 15&  17  & 160\\
+ 16&  4  & 16 \\
+ 17&  12  & 52\\
+ 18&  20  & 52\\
+ 19&  20  & 88\\
+ 20&  7  & 20\\
+ 21&  7  & 64 \\
+ 22&  15  & 52\\
+ 23&  15  & 160\\
+ 24&  10  & 24\\
+ 25&  23  & 88\\
+ 26&  10  & 40\\
+ 27&  111  & 9232\\
+ 28&  18  & 52\\
+ 29&  18  & 88\\
+ 30&  18 & 160\\
+\hline
+\end{tabular}
+}
+
+\subsection{Sequence length of 200 or greater}
+When testing for the when the length approaches 200 steps the closest values we were able to find were when n = 871 and when n = 2463. When f(871) = 178 steps and when f(2463) = 208 steps which in turn,  shows that 200 steps may provide a value for which is asymptotic to the Collatz Conjecture.    
+\subsection{Notable Patterns}
+1) All high points (up to the number 30, at least), are even numbers\\
+2) While following the procedure of the equation, for a majority of the numbers, 10 will
+eventually pop up leading into the number sequence 10, 5, 16, 8, 4, 2, and finally 1.\\
+3) For the numbers 1-30, many high points are repeated, for example the numbers 7, 9, 11, 14, 17, 18, 22, and 28 all reach a high point of 52.\\
+\subsection{Testing proof for additional sequences}
+\section{Working Backwards}
+The original formulation states that all natural numbers eventually lead to one.  Using reverse relation one can prove that the opposite will lead to one.\\
+\includegraphics[scale=0.4]{Figures/reverseCollatz.png}\\
+
+
+The reverse relation is somewhat convoluted and more complicated than the original conjecture, and it it’s based on Modular Arithmetic.\\
+
+For any integer $n, n \equi{1}$ (\mod{2}) iff 3n + 1 \equiv{4} (\mod{6})$. Equivalently, $(n − 1)/3 \equi{1} (\mod{2}) iff n \equiv{4} (\mod{6}).\\
+
+\subsection{Collatz Graph: Working Backwards}
+\includegraphics[scale=1.0]{Figures/graphbkwds.png}
+
+
+\section{Non Positive Numbers}
+\includegraphics[scale=1.0]{Figures/nonpositivechart.png}
+\clearpage
+\includegraphics[scale=1.0]{Figures/4thcyclle.png}
+
+% \section{Test 2} ... as needed
+
+\chapter{Conclusions}
+Conclusion
+        	Having been introduced to this mystery, we too have been intrigued but ultimately stumped by it. With so much evidence before our eyes it’s hard not to just consider it true and no longer just a conjecture. Integers in the hundreds and even thousands of decimal digits have been tested by this function and still come down to 1. It seems as though this conjecture has nothing else left to prove, but opinion doesn’t have much of a place in mathematics, only facts and numbers do. We think what makes this problem so interesting is the surface level simplicity of it. Any individual or kid for that matter can start working out the arithmetic of it which leads anyone to believe it can’t be that hard to prove. Yet even the greatest mathematicians of our time have stated that maybe entire branches of mathematics need to be discovered before we can solve this problem, perhaps not, only time will tell(. Regardless, our group learned a lot from this report and we really don’t believe there’s much conclusion to be said about the problem yet. There were a few patterns we picked up on such as an even number always follows an odd number and of course the “inevitable” ending 1 value. Other than the few patterns we recognize the rest seems like utter chaos, at least until it resolves itself down to 1. Although we are dissatisfied with the inconclusiveness of the conjecture I feel like the objectives set out in the report were met. We proved what we could and explored the rest
+
+\pagebreak
+
+
+% Adding a bibliography if citations are used in the report
+\bibliographystyle{plain}
+\bibliography{bibliography.bib}
+UNCRACKABLE? The Collatz Conjecture - Numberphile\\
+https://www.youtube.com/watch?v=5mFpVDpKX70\\
+(https://mathworld.wolfram.com/CollatzProblem.html)\\
+https://blog.rinatussenov.com/collatz-conjecture-calculation-in-reverse-with-javascript-a768fab10425//
+https://introcs.cs.princeton.edu/java/23recursion/Collatz.java.html\\
+https://mitchellbpowell.com/index.php/2019/09/22/htlcslp3-chapter-7-exercises/\\
+
+% Adds reference to the Bibliography in the ToC
+
+
+\pagebreak
+
+\chapter*{Appendix A: Resources}
+section*{Java (IntelliJ IDE)}
+% \section{Reference solution data}
+
+
+\end{document}
